@@ -16,8 +16,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *flipsLabel;
 @property (strong, nonatomic)CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
+
 @end
 
 @implementation CardGameViewController
@@ -36,9 +37,21 @@
 - (IBAction)touchCardButton:(UIButton *)sender {
     
     int chosenButtonIndex = [self.cardButtons indexOfObject:sender];
+    self.game.threeCardMode = self.modeSwitch.isOn;
     [self.game chooseCardAtIndex:chosenButtonIndex];
+    self.modeSwitch.enabled = NO;
+
     [self updateUI];
  
+}
+- (IBAction)dealTheCards:(id)sender {
+    [self.game resetGame];
+    [self updateUI];
+    self.game = nil;
+    self.modeSwitch.enabled = YES;
+}
+- (IBAction)gameMode:(id)sender {
+    
 }
 
 -(void)updateUI
@@ -48,7 +61,6 @@
         Card *card = [self.game cardAtIndex:cardButtonIndex];
         [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
-        NSLog(@"Button %d: %d",cardButtonIndex, card.isMatched);
         cardButton.enabled = !card.isMatched;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d",self.game.score];
     }
