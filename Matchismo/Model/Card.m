@@ -14,7 +14,9 @@
 {
     int score=0;
     for (Card *card in otherCards) {
-        if ([card.contents isEqualToString:self.contents]) {
+        NSString *sCard = [card.contents string];
+        NSString *sOtherCard = [[self contents]string];
+        if ([sCard isEqualToString:sOtherCard]) {
             score = 1;
         }
     }

@@ -19,8 +19,10 @@
 -(void)chooseCardAtIndex:(NSUInteger)index;
 -(Card *)cardAtIndex:(NSUInteger)index;
 -(void)resetGame;
+-(NSString *)getMatchedCards;
 
 @property (nonatomic, readonly)NSInteger score;
 @property (nonatomic,assign)BOOL threeCardMode;
+@property (nonatomic, readonly)NSMutableArray *cardMatches;
 
 @end

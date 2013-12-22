@@ -14,15 +14,28 @@
 @property (nonatomic, strong)NSMutableArray *cards; // of Card
 @property (nonatomic, weak)Card *card1;
 @property (nonatomic, weak)Card *card2;
+@property (nonatomic, readwrite)NSMutableArray *cardMatches;
 
 @end
 
 @implementation CardMatchingGame
 
+-(NSString *)getMatchedCards{
+    if (self.cardMatches.count == 0) {
+        return [NSString stringWithFormat:@"No score"];
+    }
+    return self.cardMatches.lastObject;
+}
+
 -(NSMutableArray *)cards
 {
     if (!_cards)_cards = [[NSMutableArray alloc]init];
     return _cards;
+}
+
+-(NSMutableArray *)cardMatches{
+    if (!_cardMatches) _cardMatches = [[NSMutableArray alloc]init];
+    return _cardMatches;
 }
 
 -(instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck
@@ -81,11 +94,11 @@ static const int COST_TO_CHOOSE = 1;
                 int matchScore = 0;
                 if (cardsFound == 2) {
                     int score1 = [card match:@[otherCard1]];
-                    if (score1)NSLog(@"%@ matches %@, %d points", card.contents,otherCard1.contents,score1);
+                    if (score1)NSLog(@"%@ matches %@, %d points", [card.contents string],[otherCard1.contents string],score1);
                     int score2 = [card match:@[otherCard2]];
-                    if (score2)NSLog(@"%@ matches %@ %d points", card.contents, otherCard2.contents,score2);
+                    if (score2)NSLog(@"%@ matches %@ %d points", [card.contents string], [otherCard2.contents string],score2);
                     int score3 = [otherCard1 match:@[otherCard2]];
-                    if (score3)NSLog(@"%@ matches %@ %d points",otherCard1.contents,otherCard2.contents,score3);
+                    if (score3)NSLog(@"%@ matches %@ %d points",[otherCard1.contents string],[otherCard2.contents string],score3);
                     matchScore = score1+score2+score3;
                     if (matchScore) {
                         self.score += matchScore * MATCH_BONUS;
@@ -109,10 +122,13 @@ static const int COST_TO_CHOOSE = 1;
                     if (otherCard.isChosen &&  !otherCard.isMatched) {
                         int matchScore = [card match:@[otherCard]];
                         if (matchScore) {
+                            NSLog(@"%@ matches %@, points %d", [card.contents string],[otherCard.contents string],matchScore+MATCH_BONUS);
+                            [self.cardMatches addObject:[NSString stringWithFormat:@"%@ matches %@, %d points", [card.contents string], [otherCard.contents string], matchScore + MATCH_BONUS]];
                             self.score += matchScore * MATCH_BONUS;
                             otherCard.matched = YES;
                             card.matched = YES;
                         } else {
+                            [self.cardMatches addObject:@"No match"];
                             self.score -= MISMATCH_PENALTY;
                             otherCard.chosen = NO;
                         }

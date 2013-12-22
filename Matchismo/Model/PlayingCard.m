@@ -25,10 +25,12 @@
     return score;
 }
 
--(NSString *)contents
+-(NSMutableAttributedString *)contents
 {
     NSArray *rankStrings = [PlayingCard rankStrings];
-    return [rankStrings[self.rank] stringByAppendingString:self.suit];
+    NSString *fContents = [rankStrings[self.rank] stringByAppendingString:self.suit];
+    NSMutableAttributedString *aString = [[NSMutableAttributedString alloc]initWithString:fContents];
+    return aString;
 }
 
 @synthesize suit = _suit; // because we provide both the setter and the getter
