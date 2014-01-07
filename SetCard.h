@@ -8,11 +8,16 @@
 
 #import "Card.h"
 
+typedef enum { NUMBER=1,  SYMBOL, SHADING, COLOR  }attribToCheck;
+
+
 @interface SetCard : Card
 
 @property (strong, nonatomic) NSString *suit;
 @property (nonatomic) UIColor *color;
-@property (nonatomic)NSInteger atrib;
+@property (nonatomic)NSInteger cardFill;
+@property (nonatomic)NSInteger cardShape;
+@property (nonatomic)NSInteger shapeNumber;
 
 
 +(NSArray *)validSuits;

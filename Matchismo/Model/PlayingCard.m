@@ -12,7 +12,7 @@
 
 -(int)match:(NSArray *)otherCards
 {
-    int score =0;
+    int score = 0;
     if ([otherCards count]==1) {
         PlayingCard *otherCard = [otherCards firstObject];
         if (otherCard.rank == self.rank) {

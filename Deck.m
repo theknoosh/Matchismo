@@ -20,6 +20,7 @@
 {
     if (!_cards) _cards = [[NSMutableArray alloc]init];
     return _cards;
+    
 }
 
 -(void)addCard:(Card *)card atTop:(BOOL)atTop

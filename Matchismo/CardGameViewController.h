@@ -9,8 +9,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Deck.h"
+#import "HistoryViewController.h"
 
-@interface CardGameViewController : UIViewController
+@interface CardGameViewController : UIViewController <HistoryViewControllerDelegate>
 
 // This method must be implemented in derived classes
 -(Deck *)createDeck;
