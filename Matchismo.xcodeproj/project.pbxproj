@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		362E48B8187CD001005C14BD /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 362E48B7187CD001005C14BD /* HistoryViewController.m */; };
 		3633FFC318618911005A8AF7 /* SetDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 3633FFC218618911005A8AF7 /* SetDeck.m */; };
 		366DB5C418642C6900F4322C /* SetCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 366DB5C318642C6900F4322C /* SetCardGameViewController.m */; };
 		36720863183EC42B000A0101 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 36720862183EC42B000A0101 /* Card.m */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		362E48B6187CD001005C14BD /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		362E48B7187CD001005C14BD /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		3633FFC118618911005A8AF7 /* SetDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetDeck.h; sourceTree = "<group>"; };
 		3633FFC218618911005A8AF7 /* SetDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetDeck.m; sourceTree = "<group>"; };
 		366DB5C218642C6900F4322C /* SetCardGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetCardGameViewController.h; sourceTree = "<group>"; };
@@ -168,6 +171,8 @@
 				36A26706183ABA3C0079059E /* CardGameViewController.m */,
 				366DB5C218642C6900F4322C /* SetCardGameViewController.h */,
 				366DB5C318642C6900F4322C /* SetCardGameViewController.m */,
+				362E48B6187CD001005C14BD /* HistoryViewController.h */,
+				362E48B7187CD001005C14BD /* HistoryViewController.m */,
 				36A26708183ABA3C0079059E /* Images.xcassets */,
 				36720864183EC736000A0101 /* Model */,
 				36A266F7183ABA3C0079059E /* Supporting Files */,
@@ -310,6 +315,7 @@
 				36A266FD183ABA3C0079059E /* main.m in Sources */,
 				36720867183EC7EF000A0101 /* PlayingCard.m in Sources */,
 				36D2706B185926A70088FD12 /* SetCard.m in Sources */,
+				362E48B8187CD001005C14BD /* HistoryViewController.m in Sources */,
 				367EA16F18465893009E7C86 /* CardMatchingGame.m in Sources */,
 				36B0B96F184007D100CDAD42 /* PlayingCardDeck.m in Sources */,
 				36B0B96C184001DD00CDAD42 /* Deck.m in Sources */,

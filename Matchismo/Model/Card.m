@@ -23,4 +23,10 @@
     return score;
 }
 
+-(int)match:(NSArray *)otherCards withAttribToCheck:(int)check
+{
+    return NO;
+}
+
+
 @end

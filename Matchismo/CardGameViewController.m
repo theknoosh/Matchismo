@@ -36,15 +36,27 @@
 - (IBAction)touchCardButton:(UIButton *)sender {
     
     long chosenButtonIndex = [self.cardButtons indexOfObject:sender];
+    self.game.threeCardMode = NO;
     [self.game chooseCardAtIndex:chosenButtonIndex];
 
     [self updateUI];
  
 }
+
+- (IBAction)touchSetCardButton:(UIButton *)sender {
+    long chosenButtonIndex = [self.cardButtons indexOfObject:sender];
+    self.game.threeCardMode = YES;
+    [self.game chooseCardAtIndex:chosenButtonIndex];
+    
+    [self updateUI];
+}
+
 - (IBAction)dealTheCards:(id)sender {
     [self.game resetGame];
     [self updateUI];
-    self.gamePrompts.text = @"No match";
+    if (self.game.threeCardMode) {
+        self.gamePrompts.text = @"No Set";
+    }else self.gamePrompts.text = @"No match";
     self.game = nil;
 }
 
@@ -72,7 +84,30 @@
 
 -(UIImage *)backgroundImageForCard:(Card *)card
 {
-    return [UIImage imageNamed:card.isChosen ? @"cardfront":@"cardback"];
+    if (self.game.threeCardMode) {
+        return [UIImage imageNamed:card.isChosen ? @"cardfront":@"setBack-1x"];
+        
+    }else return [UIImage imageNamed:card.isChosen ? @"cardfront":@"cardback"];
+}
+
+#pragma mark - PlayerDetailsViewControllerDelegate
+
+- (void)historyViewControllerDidSave:(HistoryViewController *)controller
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"setHistory"]) {
+        
+        HistoryViewController *historyViewController = segue.destinationViewController;
+        historyViewController.delegate = self;
+    }else if ([segue.identifier isEqualToString:@"cardHistory"]){
+        
+        HistoryViewController *historyViewController = segue.destinationViewController;
+        historyViewController.delegate = self;
+    }
 }
 
 @end

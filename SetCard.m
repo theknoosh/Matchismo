@@ -10,19 +10,37 @@
 
 @implementation SetCard
 
--(int)match:(NSArray *)otherCards
+-(int)match:(NSArray *)otherCards withAttribToCheck:(int)check
 {
-    int score =0;
     if ([otherCards count]==1) {
         SetCard *otherCard = [otherCards firstObject];
-        /* if (otherCard.rank == self.rank) {
-            score = 4;
-        } else if ([otherCard.suit isEqualToString:self.suit]){
-            score = 1;
-        }*/
+        AttribToCheck atrribCheck = check;
+        switch (atrribCheck) {
+            case NUMBER:
+                if (self.shapeNumber == otherCard.shapeNumber) {
+                    return YES;
+                }
+                break;
+            case SYMBOL:
+                if (self.cardShape == otherCard.cardShape) {
+                    return YES;
+                }
+                break;
+            case SHADING:
+                if (self.cardFill == otherCard.cardFill) {
+                    return YES;
+                }
+                break;
+            case COLOR:
+                if (self.color == otherCard.color) {
+                    return YES;
+                }
+                break;
+            default:
+                break;
+        }
     }
-    
-    return score;
+    return NO;
 }
 
 @synthesize suit = _suit; // because we provide both the setter and the getter
@@ -54,11 +72,30 @@
 {
     NSMutableAttributedString *attString=[[NSMutableAttributedString alloc] initWithString:self.suit];
     NSInteger _stringLength=[self.suit length];
-    [attString addAttribute:NSForegroundColorAttributeName value:self.color range:NSMakeRange(0, _stringLength)];
+    UIColor *_black = [UIColor blackColor];
+    switch (self.cardFill) {
+            
+        case 1: // Outlined
+            [attString addAttribute:NSStrokeColorAttributeName value:self.color range:NSMakeRange(0, _stringLength)];
+            [attString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:4.0] range:NSMakeRange(0, _stringLength)];
+            break;
+        case 2: // Solid
+            [attString addAttribute:NSForegroundColorAttributeName value:self.color range:NSMakeRange(0, _stringLength)];
+            break;
+        case 3: //Patterned??
+            [attString addAttribute:NSStrokeColorAttributeName value:_black range:NSMakeRange(0, _stringLength)];
+            [attString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:-5.0] range:NSMakeRange(0, _stringLength)];
+            [attString addAttribute:NSForegroundColorAttributeName value:self.color range:NSMakeRange(0, _stringLength)];
+            break;
+            
+        default:
+            [attString addAttribute:NSForegroundColorAttributeName value:self.color range:NSMakeRange(0, _stringLength)];
+            break;
+    }
     
     // NSArray *rankStrings = [PlayingCard rankStrings];
     // return [rankStrings[self.rank] stringByAppendingString:self.suit];
-    return nil;
+    return attString;
 }
 
 -(NSString *)suit

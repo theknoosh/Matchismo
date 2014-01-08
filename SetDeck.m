@@ -23,28 +23,71 @@ typedef enum { OUTLINE=0,  SOLID, TINT, TOTAL  }cardAtrib;
 {
     self = [super init];
     if (self) {
-        SetCard *card = [[SetCard alloc]init];
+        int sCount,sShape;
         for (NSString *suit in [SetCard validSuits]) {
-            card.suit = suit;
+            if ([suit isEqualToString:@"▲"]) {
+                sCount = 1;
+                sShape = 1;
+            } else if ([suit isEqualToString:@"▲▲"])
+            {
+                sCount = 2;
+                sShape = 1;
+            } else if ([suit isEqualToString:@"▲▲▲"])
+            {
+                sCount = 3;
+                sShape = 1;
+            }else if ([suit isEqualToString:@"●"])
+            {
+                sCount = 1;
+                sShape = 2;
+            }else if ([suit isEqualToString:@"●●"])
+            {
+                sCount = 2;
+                sShape = 2;
+            } else if ([suit isEqualToString:@"●●●"])
+            {
+                sCount = 3;
+                sShape = 2;
+            }else if ([suit isEqualToString:@"■"])
+            {
+                sCount = 1;
+                sShape = 3;
+            } else if ([suit isEqualToString:@"■■"])
+            {
+                sCount = 2;
+                sShape = 3;
+            } else if ([suit isEqualToString:@"■■■"])
+            {
+                sCount = 3;
+                sShape = 3;
+            }
+            
             for (UIColor *cColor in [SetCard validColors]) {
-                card.color = cColor;
                 cardAtrib cAtrib;
                 for ( cAtrib = OUTLINE; cAtrib < TOTAL; ++cAtrib)
                 {
+                    SetCard *card = [[SetCard alloc]init];
+                    card.color = cColor;
+                    card.suit = suit;
+                    card.shapeNumber = sCount;
+                    card.cardShape = sShape;
                     switch (cAtrib) {
                         case OUTLINE:
-                            card.atrib = 1;
+                            card.cardFill = 1;
+                            [self addCard:card atTop:YES];
                             break;
                         case SOLID:
-                            card.atrib = 2;
+                            card.cardFill = 2;
+                            [self addCard:card atTop:YES];
                             break;
                         case TINT:
-                            card.atrib = 3;
+                            card.cardFill = 3;
+                            [self addCard:card atTop:YES];
                             break;
                         default:
                             break;
                     }
-                    [self addCard:card atTop:YES];
+                    // NSLog(@"Card; %@",[card.contents string]);
                 }
             }
         }
