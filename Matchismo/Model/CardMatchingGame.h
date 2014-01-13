@@ -20,6 +20,7 @@
 -(Card *)cardAtIndex:(NSUInteger)index;
 -(void)resetGame;
 -(NSString *)getMatchedCards;
+-(NSAttributedString *)getSetMatchedCards;
 
 @property (nonatomic, readonly)NSInteger score;
 @property (nonatomic,assign)BOOL threeCardMode;

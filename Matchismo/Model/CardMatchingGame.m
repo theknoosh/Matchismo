@@ -27,6 +27,14 @@
     return self.cardMatches.lastObject;
 }
 
+-(NSAttributedString *)getSetMatchedCards; {
+    if (self.cardMatches.count == 0) {
+        NSAttributedString *aString;
+        aString = [[NSAttributedString alloc]initWithString:@"No Set"];
+        return aString;
+    }return self.cardMatches.lastObject;
+}
+
 -(NSMutableArray *)cards
 {
     if (!_cards)_cards = [[NSMutableArray alloc]init];
@@ -39,7 +47,7 @@
 }
 
 -(instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck
-{
+{ 
     self = [super init];
     if (self) {
         for (int i=0; i<count; i++) {
@@ -166,19 +174,19 @@ static const int COST_TO_CHOOSE = 1;
                 otherCard1.matched = YES;
                 otherCard2.matched = YES;
                 card.chosen = YES;
-                NSMutableAttributedString *cardResult = [[NSMutableAttributedString alloc]initWithString:@" Set "];
+                NSMutableAttributedString *cardResult = [[NSMutableAttributedString alloc]initWithString:@" Set: "];
                 [cardResult appendAttributedString:card.contents];
                 
                 NSUInteger sLength = [cardResult length];
                 [cardResult replaceCharactersInRange:NSMakeRange([cardResult length] , 0)
-                                          withString:@" card,"];
+                                          withString:@" card, "];
                 [cardResult addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(sLength,[cardResult length]-sLength)];
                 [cardResult addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:0.0] range:NSMakeRange(sLength,[cardResult length]-sLength)];
                 
                 [cardResult appendAttributedString:otherCard1.contents];
                 sLength = [cardResult length];
                 [cardResult replaceCharactersInRange:NSMakeRange([cardResult length] , 0)
-                                          withString:@" card and"];
+                                          withString:@" card and "];
                 [cardResult addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(sLength,[cardResult length]-sLength)];
                 [cardResult addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:0.0] range:NSMakeRange(sLength,[cardResult length]-sLength)];
                 
@@ -189,9 +197,8 @@ static const int COST_TO_CHOOSE = 1;
                 [cardResult addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(sLength,[cardResult length]-sLength)];
                 [cardResult addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:0.0] range:NSMakeRange(sLength,[cardResult length]-sLength)];
                 
-                
+                // Add attributed string to array
                 [self.cardMatches addObject:cardResult];
-                //[self.cardMatches addObject:[NSString stringWithFormat:@"Set found %@, %@, and %@ -- %d points", [card.contents string], [otherCard1.contents string], [otherCard2.contents string], 25 + MATCH_BONUS]];
                 
                 self.score -= COST_TO_CHOOSE;
             }else{
@@ -204,12 +211,13 @@ static const int COST_TO_CHOOSE = 1;
                         if (matchScore) {
                             NSLog(@"%@ matches %@, points %d", [card.contents string],[otherCard.contents string],matchScore+MATCH_BONUS);
                             
+                            // Add string to array
                             [self.cardMatches addObject:[NSString stringWithFormat:@"%@ matches %@, %d points", [card.contents string], [otherCard.contents string], matchScore + MATCH_BONUS]];
                             self.score += matchScore * MATCH_BONUS;
                             otherCard.matched = YES;
                             card.matched = YES;
                         } else {
-                            [self.cardMatches addObject:@"No match"];
+                            // [self.cardMatches addObject:@"No match"];
                             NSLog(@"No Match");
                             self.score -= MISMATCH_PENALTY;
                             otherCard.chosen = NO;

@@ -71,7 +71,9 @@
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld",(long)self.game.score];
-        self.gamePrompts.text = self.game.getMatchedCards;
+        if (self.game.threeCardMode) {
+            self.gamePrompts.attributedText = self.game.getSetMatchedCards;
+        } else self.gamePrompts.text = self.game.getMatchedCards;
         
     }
 }
@@ -99,15 +101,48 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    NSMutableAttributedString *allMatches = [[NSMutableAttributedString alloc]init];
+    NSMutableAttributedString *defaultString =[[NSMutableAttributedString alloc]initWithString:@"Nothing here"];
+    
+    
     if ([segue.identifier isEqualToString:@"setHistory"]) {
         
         HistoryViewController *historyViewController = segue.destinationViewController;
         historyViewController.delegate = self;
+        
+        if ([self.game.cardMatches count]) {
+            for (NSAttributedString *aString in self.game.cardMatches) {
+                NSAttributedString *stringReturn = [[NSAttributedString alloc]initWithString:@"\n"];
+                [allMatches appendAttributedString:aString];
+                [allMatches appendAttributedString:stringReturn];
+            }
+        }else allMatches = defaultString;
+        
+        historyViewController.contentForBox = allMatches;
+        
+        NSLog(@"Game Matches Length %lu",(unsigned long)[self.game.cardMatches count]);
     }else if ([segue.identifier isEqualToString:@"cardHistory"]){
         
         HistoryViewController *historyViewController = segue.destinationViewController;
         historyViewController.delegate = self;
+        historyViewController.contentForBox = allMatches;
+        
+        if ([self.game.cardMatches count]) {
+            for (NSString *aString in self.game.cardMatches) {
+                NSString *stringReturn = [NSString stringWithFormat:@"%@%@",aString,@"\n"];
+                NSMutableAttributedString *theString = [[NSMutableAttributedString alloc]initWithString:stringReturn];
+                [allMatches appendAttributedString:theString];
+            }
+        }else allMatches = defaultString;
+
+        
+        NSLog(@"Game Matches Length %lu",(unsigned long)[self.game.cardMatches count]);
     }
+}
+
+- (void)dealloc
+{
+    NSLog(@"dealloc CardGameViewController");
 }
 
 @end

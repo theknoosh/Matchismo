@@ -17,6 +17,7 @@
 @interface HistoryViewController : UIViewController
 
 @property (nonatomic, weak) id <HistoryViewControllerDelegate> delegate;
+@property (strong, nonatomic)NSAttributedString *contentForBox;
 
 - (IBAction)done:(id)sender;
 
